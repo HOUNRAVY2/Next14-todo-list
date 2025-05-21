@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: 'development'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy with Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25.1.0
+        with:
+          # scope: 'fishtank'
+          vercel-args: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') && '--prod') || '' }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
