@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .container-full {
+    @apply px-[20px] 2xl:px-0 w-full xl:max-w-[1120px] 2xl:max-w-[1280px] mx-auto;
+  }
+
+  .container-fluid {
+    @apply w-full max-w-[1920px] mx-auto;
+  }
+}

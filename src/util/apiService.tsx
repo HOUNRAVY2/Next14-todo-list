@@ -4,13 +4,13 @@ type FetchDataByGetType = (url: string, params?: Record<string, string | number 
 type FetchImageType = (url: string) => string;
 type RequestInitType = (body: Record<string, any>, method?: 'POST' | 'GET' | 'PUT' | 'DELETE') => RequestInit;
 type FetcherType = (...args: Parameters<typeof fetch>) => Promise<any>;
-
+const apiPath = '/api'
 export const fetchDataByGet:FetchDataByGetType = (url, params = {}) => {
   const newParams = `${
     Object.keys(params).length > 0 ? `?${new URLSearchParams(params).toString()}` : ''
   }`;
 
-  return `${getStrapiDomain()}${url}${newParams}`;
+  return `${apiPath}${url}${newParams}`;
 };
 
 export const fetchImage: FetchImageType = (url) => {
