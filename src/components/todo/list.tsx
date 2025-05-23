@@ -10,7 +10,6 @@ export default function List() {
     const [editingId, setEditingId] = useState<any | unknown>(null);
     const [isFiltering, setIsFiltering] = useState<boolean>(false);
   
-    // Fetch todos from API
     useEffect(() => {
       const fetchTodos = async () => {
         try {
@@ -26,7 +25,6 @@ export default function List() {
       fetchTodos();
     }, []);
   
-    // Filter todos based on input
     useEffect(() => {
       if (inputValue.trim() === '') {
         setFilteredTodos(todos);
@@ -41,16 +39,12 @@ export default function List() {
   
     const handleAddTodo = (e:KeyboardEvent<HTMLInputElement>) => {
       if (e.key !== 'Enter') return;
-  
       const trimmedValue = inputValue.trim();
-      
-      // Validate empty input
       if (!trimmedValue) {
         alert('Todo cannot be empty!');
         return;
       }
   
-      // Check for duplicates
       const isDuplicate = todos.some(
         todo => todo.todo.toLowerCase() === trimmedValue.toLowerCase()
       );
@@ -97,28 +91,32 @@ export default function List() {
   
     return (
       <div className=' text-white'>
-        <h1>Todo List</h1>
-        <input
-        className=' text-black'
+           <div className=" text-center pt-[30px] pb-[10px]">
+          <h3 className=" text-white font-semibold text-[24px]">Todo List</h3>
+        </div>
+         <div className=' flex justify-center items-center  '>
+           <input
+        className={` text-black focus:nome  ${isFiltering && `focus:outline-[#3333ff]`} ${!isFiltering && 'focus:outline-red-600'}   py-[10px] px-[20px] rounded-md md:w-[350px] w-full text-[12px]`}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleAddTodo}
           placeholder={editingId ? "Edit your todo..." : "Add a new todo..."}
         />
+        </div>
         
-        <ul>
+        <div className='flex justify-center items-center'>
+        <ul className='py-[20px] space-y-[10px] '>
           {filteredTodos.length > 0 ? (
             filteredTodos.map(todo => (
-              <li 
+              <li className={`${todo.isCompleted && 'line-through'} hover:opacity-90 hover:scale-[1.02] group cursor-pointer relative overflow-hidden px-[10px] py-[8px] bg-white/35 h-auto break-words border-[1px] rounded-md border-white  md:w-[350px] w-full`}
                 key={todo.id} 
-                style={{ textDecoration: todo.isCompleted ? 'line-through' : 'none' }}
               >
                 {todo.todo}
-                <span style={{ marginLeft: '10px', opacity: 0.5 }}>
-                  <button onClick={() => handleRemoveTodo(todo.id)}>Remove</button>
-                  <button onClick={() => handleEditTodo(todo.id, todo.todo)}>Edit</button>
-                  <button onClick={() => handleToggleComplete(todo.id)}>
+                <span className=' absolute  group-hover:right-[10px] text-[14px] right-[-300px] delay-100 duration-500 space-x-[6px]'>
+                  <button className='bg-red-500 px-[10px] py-[2px] hover:scale-[1.02] rounded-md' onClick={() => handleRemoveTodo(todo.id)}>Remove</button>
+                  <button className=' bg-slate-50 text-gray-800 px-[10px] py-[2px] hover:scale-[1.02] rounded-md'  onClick={() => handleEditTodo(todo.id, todo.todo)}>Edit</button>
+                  <button className=' bg-slate-50 text-gray-800 px-[10px] py-[2px] hover:scale-[1.02] rounded-md' onClick={() => handleToggleComplete(todo.id)}>
                     {todo.isCompleted ? 'Mark Incomplete' : 'Mark Complete'}
                   </button>
                 </span>
@@ -130,6 +128,7 @@ export default function List() {
             <li>empty</li>
           )}
         </ul>
+        </div>
       </div>
     );
 }

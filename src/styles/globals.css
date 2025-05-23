@@ -1,3 +1,16 @@
+html{
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
+
 .backdrop:before {
   position: absolute;
   z-index: -1;
