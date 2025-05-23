@@ -9,12 +9,12 @@ export const dynamic = 'force-dynamic';
 export async function GET(): Promise<NextResponse<Todo[] | { error: string, details?: string}>> {
   try {
     const todos = await getAllTodos();
-    if (!todos || todos.length === 0) {
-      return NextResponse.json(
-        { error: 'No todos found' },
-        { status: 404 }
-      );
-    }
+    // if (!todos || todos.length === 0) {
+    //   return NextResponse.json(
+    //     { error: 'No todos found' },
+    //     { status: 404 }
+    //   );
+    // }
     return NextResponse.json(todos, {
       status: 200,
       headers: {
